@@ -18,7 +18,7 @@ function App() {
   const suits = ['D', 'H', 'S', 'C']; //possible suits available (4)
   const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']//possible ranks available (13)
   
-  function initializeDeck() {
+  const initializeDeck = () => {
     for (let suit = 0;suit < suits.length; suit++) {
       for (let rank = 0; rank < ranks.length; rank++) {
         let card = {Suit: suits[suit], Rank: ranks[rank]}
@@ -27,9 +27,8 @@ function App() {
     }
   }
   
-  
-
-  function deal() {
+  const deal = (e) => {
+    e.preventDefault();
     if (deck.length < 4) {
       console.log('GAME OVER')
       return false;
@@ -44,17 +43,53 @@ function App() {
   }
 
   initializeDeck()
-
+  
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={deal}>Deal</button>
+        <button className="dealBtn" onClick={(e) => {deal(e)}}>Deal Cards</button>
       </header>
       <div className='cards-container'>
-        <span className='card cardA'>CARD A</span>
-        <span className='card cardB'>CARD B</span>
-        <span className='card cardC'>CARD C</span>
-        <span className='card cardD'>CARD D</span>
+        <div className='card cardA'>
+          <div className="cardInner cardTop">
+            <span className="cardRank">J</span>
+            <span className="cardSuit">&#127839;</span>
+          </div>
+          <div className="cardInner cardBottom">
+            <span className="cardRank">J</span>
+            <span className="cardSuit">&#127839;</span>
+          </div>
+        </div>
+        <div className='card cardB'>
+          <div className="cardInner cardTop">
+            <span className="cardRank">A</span>
+            <span className="cardSuit">&#127829;</span>
+          </div>
+          <div className="cardInner cardBottom">
+            <span className="cardRank">A</span>
+            <span className="cardSuit">&#127829;</span>
+          </div>
+        </div>
+        <div className='card cardC'>
+          <div className="cardInner cardTop">
+            <span className="cardRank">3</span>
+            <span className="cardSuit">&#127790;</span>
+          </div>
+          <div className="cardInner cardBottom">
+            <span className="cardRank">3</span>
+            <span className="cardSuit">&#127790;</span>
+          </div>
+        </div>
+        <div className='card cardD'>
+          <div className="cardInner cardTop">
+            <span className="cardRank">10</span>
+            <span className="cardSuit">&#127850;</span>
+          </div>
+          <div className="cardInner cardBottom">
+            <span className="cardRank">10</span>
+            <span className="cardSuit">&#127850;</span>
+          </div>
+        </div>
       </div>
     </div>
   );
