@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react';
 import './App.css';
 
 //pseudo code
@@ -13,81 +14,111 @@ import './App.css';
 
 function App() {
   // empty array representing Deck
-  const deck = []; //should be 52 cards
+  const [deck, setDeck] = useState([]); //should be 52 cards
   
-  const suits = ['D', 'H', 'S', 'C']; //possible suits available (4)
+  // const suits = ['D', 'H', 'S', 'C']; //possible suits available (4)
+  const suits = ['&#127839;', '&#127829;', '&#127790;', '&#127850;']; //possible suits available (4)
   const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']//possible ranks available (13)
   
+  const [zeroDeal, setZeroDeal] = useState(true);
+  const [gameOver, setGameOver] = useState(false);
+  const [cardsStart, setCardsStart] = useState([
+    {Suit: '', Value: ''},
+    {Suit: '', Value: ''},
+    {Suit: '', Value: ''},
+    {Suit: '', Value: ''}
+  ])
+
   const initializeDeck = () => {
+    // setZeroDeal(false)
+    const tempDeck = [];
     for (let suit = 0;suit < suits.length; suit++) {
       for (let rank = 0; rank < ranks.length; rank++) {
-        let card = {Suit: suits[suit], Rank: ranks[rank]}
-        deck.push(card)
+        let color = suit % 2 === 0 ? '#F00' : '#000';
+        let card = {Suit: suits[suit], Rank: ranks[rank], color}
+        tempDeck.push(card)
       }
     }
+    setDeck([...tempDeck])
+    setZeroDeal(true)
+    setGameOver(false)
   }
   
+  
+
   const deal = (e) => {
+    // setZeroDeal(false)
     e.preventDefault();
     if (deck.length < 4) {
       console.log('GAME OVER')
+      !gameOver && setGameOver(true)
       return false;
     }
 
     console.log(`deck has: ${deck.length} cards left`) 
-    deck.pop()
-    deck.pop()
-    deck.pop()
-    deck.pop()
-    
+    console.log(deck[deck.length - 1], deck[deck.length-2], deck[deck.length-3], deck[deck.length-4])
+    deck.splice(-4)
   }
-
-  initializeDeck()
   
+  useEffect(() => {
+    initializeDeck()
+  },[])
+  
+
+  const zeroDealClass = zeroDeal ? 'nodeal' : '';
   return (
     <div className="App">
       <header className="App-header">
-        <button className="dealBtn" onClick={(e) => {deal(e)}}>Deal Cards</button>
+        <button className="dealBtn" 
+        onClick={
+          (e) => {
+            deal(e)
+            zeroDeal && setZeroDeal(false)
+          }
+        }
+        >Deal Cards</button>
       </header>
+      <button className='resetBtn' onClick={initializeDeck}>reset</button>
       <div className='cards-container'>
-        <div className='card cardA'>
+        {gameOver && <span className='gameOver'>Game Over!</span>}
+        <div className={`card cardA ${zeroDealClass}`}>
           <div className="cardInner cardTop">
-            <span className="cardRank">J</span>
-            <span className="cardSuit">&#127839;</span>
+            <span className="cardRank">{!gameOver ? cardsStart.Value : deck[deck.length - 1].Rank}</span>
+            <span className="cardSuit">{!gameOver ? cardsStart.Suit : deck[deck.length - 1].Suit}</span>
           </div>
           <div className="cardInner cardBottom">
-            <span className="cardRank">J</span>
-            <span className="cardSuit">&#127839;</span>
+            <span className="cardRank">{!gameOver ? cardsStart.Value : deck[deck.length - 1].Rank}</span>
+            <span className="cardSuit">{!gameOver ? cardsStart.Suit : deck[deck.length - 1].Suit}</span>
           </div>
         </div>
-        <div className='card cardB'>
+        <div className={`card cardB ${zeroDealClass}`}>
           <div className="cardInner cardTop">
-            <span className="cardRank">A</span>
-            <span className="cardSuit">&#127829;</span>
+            <span className="cardRank">{!gameOver && cardsStart.Value}</span>
+            <span className="cardSuit">{!gameOver && cardsStart.Suit}</span>
           </div>
           <div className="cardInner cardBottom">
-            <span className="cardRank">A</span>
-            <span className="cardSuit">&#127829;</span>
+            <span className="cardRank">{!gameOver && cardsStart.Value}</span>
+            <span className="cardSuit">{!gameOver && cardsStart.Suit}</span>
           </div>
         </div>
-        <div className='card cardC'>
+        <div className={`card cardC ${zeroDealClass}`}>
           <div className="cardInner cardTop">
-            <span className="cardRank">3</span>
-            <span className="cardSuit">&#127790;</span>
+            <span className="cardRank">{!gameOver && cardsStart.Value}</span>
+            <span className="cardSuit">{!gameOver && cardsStart.Suit}</span>
           </div>
           <div className="cardInner cardBottom">
-            <span className="cardRank">3</span>
-            <span className="cardSuit">&#127790;</span>
+            <span className="cardRank">{!gameOver && cardsStart.Value}</span>
+            <span className="cardSuit">{!gameOver && cardsStart.Suit}</span>
           </div>
         </div>
-        <div className='card cardD'>
+        <div className={`card cardD ${zeroDealClass}`}>
           <div className="cardInner cardTop">
-            <span className="cardRank">10</span>
-            <span className="cardSuit">&#127850;</span>
+            <span className="cardRank">{!gameOver && cardsStart.Value}</span>
+            <span className="cardSuit">{!gameOver && cardsStart.Suit}</span>
           </div>
           <div className="cardInner cardBottom">
-            <span className="cardRank">10</span>
-            <span className="cardSuit">&#127850;</span>
+            <span className="cardRank">{!gameOver && cardsStart.Value}</span>
+            <span className="cardSuit">{!gameOver && cardsStart.Suit}</span>
           </div>
         </div>
       </div>

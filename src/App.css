@@ -32,10 +32,18 @@
   transform: scale(.9);
 }
 
+.resetBtn {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  padding: .25em .5em;
+}
+
 .cards-container {
   display:grid;
   gap: 2em;
   grid-template-columns: repeat(4, 1fr);
+  position: relative;
 }
 
 .card {
@@ -57,6 +65,10 @@
   color: red;
 }
 
+.card.nodeal {
+  border-color: #aaa;
+}
+
 .cardInner {
   display: grid;
 }
@@ -64,4 +76,24 @@
 .cardBottom {
   transform: rotateZ(180deg);
   justify-self: end;
+}
+
+
+.gameOver {
+  position: absolute;
+  font-size: 3em;
+  font-weight: 600;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  background: #eee;
+  padding: .5em 1em;
+  border: 8px solid rgb(158, 107, 107);
+  border-radius: 10px;
+  box-shadow: 
+    0 0 0 8px #ccc, 
+    0 0 0 16px #aaa,
+    0 0 0 24px #666,
+    0 0 0 32px #222;
 }
