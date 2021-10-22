@@ -7,7 +7,7 @@
 .App {
   text-align: center;
   display: grid;
-  place-items: center;
+  align-items: center;
   min-height: 100vh;
 }
 
@@ -33,30 +33,34 @@
 }
 
 .resetBtn {
-  position: fixed;
+  position: absolute;
   top: 1em;
   right: 1em;
   padding: .25em .5em;
 }
 
 .cards-container {
-  display:grid;
-  gap: 2em;
-  grid-template-columns: repeat(4, 1fr);
+  align-self: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
   position: relative;
+  margin: 0 2em;
 }
 
 .card {
   font-size: 1.5em;
   font-weight: 600;
   padding: .5em;
+  margin: .5em auto;
   border: 3px solid #000;
   border-radius: 5px;
   height: 200px;
-  width: 140px;
+  flex: 0 0 130px;
   box-shadow: 1px 3px 2px 0 rgba(68, 68, 68, 0.513);
   display: grid;
-  align-content: space-between;
+  align-content: space-around;
   justify-items: start;
 }
 
