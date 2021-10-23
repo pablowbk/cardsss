@@ -58,21 +58,37 @@ function App() {
     return counter;
   }
 
+  const getRandomInt = (max, min) => {
+    return Math.floor(Math.random() * (max-min)) + min;
+  }
+
   const deal = (e) => {
-    // setZeroDeal(false)
-    // console.log(visibleCards)
-    let cardCount = countCards()
     e.preventDefault();
+    let cardCount = countCards()
+    
     if (cardCount < 4) {
       console.log('GAME OVER')
       !gameOver && setGameOver(true)
       return false;
     }
+
+    setDiamonds(deck[0].D[getRandomInt(0, cardCount / 4)])
+    setHearts(deck[1].H[getRandomInt(0, cardCount / 4)])
+    setSpades(deck[2].S[getRandomInt(0, cardCount / 4)])
+    setClubs(deck[3].C[getRandomInt(0, cardCount / 4)])
     
-    setDiamonds({Suit: deck[0].D[deck[0].D.length-1].Suit, Rank: deck[0].D[deck[0].D.length-1].Rank})
-    setHearts({Suit: deck[1].H[deck[1].H.length-1].Suit, Rank: deck[1].H[deck[1].H.length-1].Rank})
-    setSpades({Suit: deck[2].S[deck[2].S.length-1].Suit, Rank: deck[2].S[deck[2].S.length-1].Rank})
-    setClubs({Suit: deck[3].C[deck[3].C.length-1].Suit, Rank: deck[3].C[deck[3].C.length-1].Rank})
+    // setDiamonds(
+    //   {Suit: deck[0].D[deck[0].D.length-1].Suit, Rank: deck[0].D[deck[0].D.length-1].Rank}
+    //   )
+    // setHearts(
+    //   {Suit: deck[1].H[deck[1].H.length-1].Suit, Rank: deck[1].H[deck[1].H.length-1].Rank}
+    //   )
+    // setSpades(
+    //   {Suit: deck[2].S[deck[2].S.length-1].Suit, Rank: deck[2].S[deck[2].S.length-1].Rank}
+    //   )
+    // setClubs(
+    //   {Suit: deck[3].C[deck[3].C.length-1].Suit, Rank: deck[3].C[deck[3].C.length-1].Rank}
+    //   )
     
     console.log(`deck has: ${cardCount} cards left`) 
     deck.forEach(suit=>{ 
@@ -118,6 +134,7 @@ function App() {
             <span className="cardSuit">{clubs.Suit}</span>
           </div>
         </div>
+
         <div className={`card cardB ${zeroDealClass}`}>
           <div className="cardInner cardTop">
             <span className="cardRank">{hearts.Rank}</span>
@@ -128,6 +145,7 @@ function App() {
             <span className="cardSuit">{hearts.Suit}</span>
           </div>
         </div>
+
         <div className={`card cardC ${zeroDealClass}`}>
           <div className="cardInner cardTop">
             <span className="cardRank">{spades.Rank}</span>
@@ -138,6 +156,7 @@ function App() {
             <span className="cardSuit">{spades.Suit}</span>
           </div>
         </div>
+
         <div className={`card cardD ${zeroDealClass}`}>
           <div className="cardInner cardTop">
             <span className="cardRank">{diamonds.Rank}</span>
