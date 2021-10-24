@@ -119,10 +119,12 @@ function App() {
   }
   
 
-  useEffect(() => {
-    initializeDeck()
-    console.log(deck)
-  },[])
+  // useEffect(() => {
+  //   initializeDeck()
+  //   console.log(deck)
+  // },[]) //this worked but threw a warning, so we passed initializeDeck as a callback, so it would run just once
+
+  useEffect(initializeDeck,[])
   
 
   const zeroDealClass = zeroDeal ? 'nodeal' : '';
