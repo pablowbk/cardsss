@@ -1,5 +1,9 @@
 import {useState, useEffect} from 'react';
 import './App.css';
+import clubsImg from './img/c.svg'
+import diamondsImg from './img/d.svg'
+import heartsImg from './img/h.svg'
+import spadesImg from './img/s.svg'
 
 //pseudo code
 /*
@@ -167,22 +171,24 @@ function RenderCard({card, zeroDealClass}) {
 }
 
 function RenderSvg({suit}) {
+  let svg;
   switch(suit) {
     case 'D':
-      return <img className='suitSvg' src='d.svg' alt='diamonds'/>
+      svg = <img className='suitSvg' src={diamondsImg} alt='diamonds'/>
       break;
     case 'H':
-      return <img className='suitSvg' src='h.svg' alt='hearts'/>
+      svg = <img className='suitSvg' src={heartsImg} alt='hearts'/>
       break;
     case 'S':
-      return <img className='suitSvg' src='s.svg' alt='spades'/>
+      svg = <img className='suitSvg' src={spadesImg} alt='spades'/>
       break;
     case 'C':
-      return <img className='suitSvg' src='c.svg' alt='clubs'/>
+      svg = <img className='suitSvg' src={clubsImg} alt='clubs'/>
       break;
     default:
-      return ''
+      svg = ''
   }
+  return svg;
 }
 
 export default App;
