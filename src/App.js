@@ -11,11 +11,11 @@ import './App.css';
 
 */
 
+const suits = ['D', 'H', 'S', 'C']; //possible suits available (4) 
+// const suits = ['&#127839;', '&#127829;', '&#127790;', '&#127850;']; //possible suits available (4)
+const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']//possible ranks available (13)
 
 function App() {
-  const suits = ['D', 'H', 'S', 'C']; //possible suits available (4) 
-  // const suits = ['&#127839;', '&#127829;', '&#127790;', '&#127850;']; //possible suits available (4)
-  const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']//possible ranks available (13)
   
   // const cardsStart = {Suit: '', Rank: ''};
 
@@ -141,30 +141,48 @@ function App() {
       <div className='cards-container'>
         {gameOver && <span className='gameOver'>Game Over!</span>}
 
-        <RenderCard card={diamonds} zeroDealClass={zeroDealClass} />
-        <RenderCard card={hearts} zeroDealClass={zeroDealClass} />
         <RenderCard card={spades} zeroDealClass={zeroDealClass} />
+        <RenderCard card={hearts} zeroDealClass={zeroDealClass} />
         <RenderCard card={clubs} zeroDealClass={zeroDealClass} />
-
+        <RenderCard card={diamonds} zeroDealClass={zeroDealClass} />
       </div>
+
     </div>
   );
 }
 
 function RenderCard({card, zeroDealClass}) {
   return (
-    <div className={`card cardD ${zeroDealClass}`}>
+    <div className={`card ${zeroDealClass}`}>
       <div className="cardInner cardTop">
         <span className="cardRank">{card.Rank}</span>
-        <span className="cardSuit">{card.Suit}</span>
+        <span className="cardSuit"><RenderSvg suit={card.Suit} /></span>
       </div>
       <div className="cardInner cardBottom">
         <span className="cardRank">{card.Rank}</span>
-        <span className="cardSuit">{card.Suit}</span>
+        <span className="cardSuit"><RenderSvg suit={card.Suit} /></span>
       </div>
     </div>
   )
+}
 
+function RenderSvg({suit}) {
+  switch(suit) {
+    case 'D':
+      return <img className='suitSvg' src='d.svg' alt='diamonds'/>
+      break;
+    case 'H':
+      return <img className='suitSvg' src='h.svg' alt='hearts'/>
+      break;
+    case 'S':
+      return <img className='suitSvg' src='s.svg' alt='spades'/>
+      break;
+    case 'C':
+      return <img className='suitSvg' src='c.svg' alt='clubs'/>
+      break;
+    default:
+      return ''
+  }
 }
 
 export default App;
