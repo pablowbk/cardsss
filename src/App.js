@@ -1,9 +1,6 @@
 import {useState, useEffect} from 'react';
+import RenderCard from './components/RenderCard';
 import './App.css';
-import clubsImg from './img/c.svg'
-import diamondsImg from './img/d.svg'
-import heartsImg from './img/h.svg'
-import spadesImg from './img/s.svg'
 
 //pseudo code
 /*
@@ -155,42 +152,6 @@ function App() {
 
     </div>
   );
-}
-
-function RenderCard({card, zeroDealClass}) {
-  return (
-    <div className={`card ${zeroDealClass}`}>
-      <div className="cardInner cardTop">
-        <span className="cardRank">{card.Rank}</span>
-        <span className="cardSuit"><RenderSvg suit={card.Suit} /></span>
-      </div>
-      <div className="cardInner cardBottom">
-        <span className="cardRank">{card.Rank}</span>
-        <span className="cardSuit"><RenderSvg suit={card.Suit} /></span>
-      </div>
-    </div>
-  )
-}
-
-function RenderSvg({suit}) {
-  let svg;
-  switch(suit) {
-    case 'D':
-      svg = <img className='suitSvg' src={diamondsImg} alt='diamonds'/>
-      break;
-    case 'H':
-      svg = <img className='suitSvg' src={heartsImg} alt='hearts'/>
-      break;
-    case 'S':
-      svg = <img className='suitSvg' src={spadesImg} alt='spades'/>
-      break;
-    case 'C':
-      svg = <img className='suitSvg' src={clubsImg} alt='clubs'/>
-      break;
-    default:
-      svg = ''
-  }
-  return svg;
 }
 
 export default App;
