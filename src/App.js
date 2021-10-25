@@ -21,40 +21,34 @@ function App() {
   // const cardsStart = {Suit: '', Rank: ''};
 
   // empty array representing Deck
-  const [deck, setDeck] = useState([]); //should be 52 cards
+  const [fullDeck, setFullDeck] = useState([]); //should be 52 cards
   const [zeroDeal, setZeroDeal] = useState(true);
   const [gameOver, setGameOver] = useState(false);
-  const [clubs, setClubs] = useState({Suit: '', Rank: '', color: ''})
-  const [spades, setSpades] = useState({Suit: '', Rank: '', color: ''})
-  const [hearts, setHearts] = useState({Suit: '', Rank: '', color: ''})
-  const [diamonds, setDiamonds] = useState({Suit: '', Rank: '', color: ''})
+  const [card1, setCard1] = useState({Suit: '', Rank: '', color: ''})
+  const [card2, setCard2] = useState({Suit: '', Rank: '', color: ''})
+  const [card3, setCard3] = useState({Suit: '', Rank: '', color: ''})
+  const [card4, setCard4] = useState({Suit: '', Rank: '', color: ''})
 
   const initializeDeck = () => {
-    // setZeroDeal(false)
-    const tempDeck = [];
+    const fullDeck = [];
     for (let i = 0;i < suits.length; i++) {
-      let tempSuit = suits[i];
-      tempDeck.push({[tempSuit]: []});
-      let tempRanks = [];
       for (let j = 0; j < ranks.length; j++) {
         let color = suits[i] === 'D' || suits[i] === 'H' ? '#F00' : '#000';
         let card = {Suit: suits[i], Rank: ranks[j], color}
-        tempRanks.push(card)
+        fullDeck.push(card)
         }
-      tempDeck[i][tempSuit] = tempRanks;
     }
-    setDeck([...tempDeck])
+    setFullDeck([...fullDeck])
     setZeroDeal(true)
     setGameOver(false)   
-    setDiamonds({Suit: '', Rank: ''}) 
-    setHearts({Suit: '', Rank: ''})
-    setSpades({Suit: '', Rank: ''})
-    setClubs({Suit: '', Rank: ''})
+    setCard1({Suit: '', Rank: ''}) 
+    setCard2({Suit: '', Rank: ''})
+    setCard3({Suit: '', Rank: ''})
+    setCard4({Suit: '', Rank: ''})
   }
   
   const countCards = function() {
-    let counter = 0;
-    deck.forEach((item) => {counter += Object.values(item)[0].length})
+    let counter = fullDeck.length;
     return counter;
   }
 
@@ -72,57 +66,25 @@ function App() {
       return false;
     }
 
-    // setDiamonds(deck[0].D[deck[0].D.length - 1])
-    // setHearts(deck[1].H[deck[1].H.length - 1])
-    // setSpades(deck[2].S[deck[2].S.length - 1])
-    // setClubs(deck[3].C[deck[3].C.length - 1])
-    
-    
-    //remove 4 cards from deck
-    deck.forEach(suit=>{ 
-      for(const key in suit) {
-        let random = getRandomInt(suit[key].length);
-        switch(key) {
-          case 'D':
-          // case '&#127839;':
-          setDiamonds(suit[key].splice(random,1)[0])
-          // console.log(suit[key].splice(random,1)[0])
-          break;
-          case 'H':
-          // case '&#127829;':
-          setHearts(suit[key].splice(random,1)[0])
-          // console.log(suit[key].splice(random,1)[0])
-          break;
-          case 'S':
-          // case '&#127790;':
-          setSpades(suit[key].splice(random,1)[0])
-          // console.log(suit[key].splice(random,1)[0])
-          break;
-          case 'C':
-          // case '&#127850;':
-          setClubs(suit[key].splice(random,1)[0])
-          // console.log(suit[key].splice(random,1)[0])
-          break;
-          default:
-            return {Suit: '', Rank: '', color: ''}
-        }
+    for(let round = 1;round <= 4; round++) {
+      let random = getRandomInt(fullDeck.length);
+      if (round === 1) {
+        setCard1(fullDeck.splice(random,1)[0])
+      } else if (round === 2) {
+        setCard2(fullDeck.splice(random,1)[0])
+      } else if (round === 3) {
+        setCard3(fullDeck.splice(random,1)[0])
+      } else {
+        setCard4(fullDeck.splice(random,1)[0])
       }
-    })
+    }
 
     cardCount = countCards()
 
     console.log(`deck has: ${cardCount} cards left`) 
-    
   }
   
-
-  // useEffect(() => {
-  //   initializeDeck()
-  //   console.log(deck)
-  // },[]) //this worked but threw a warning, so we passed initializeDeck as a callback, so it would run just once
-
   useEffect(initializeDeck,[])
-  
 
   const zeroDealClass = zeroDeal ? 'nodeal' : '';
   const disableBtn = {backgroundColor: '#ccc'}
@@ -139,15 +101,15 @@ function App() {
         >Deal Cards</button>
       </header>
       
-      {!zeroDeal && <button className='resetBtn' onClick={initializeDeck}>reset</button>}
+      {!zeroDeal && <button className={!gameOver ? 'resetBtn' : 'resetBtn resetGameOver'} onClick={initializeDeck}>reset</button>}
 
       <div className='cards-container'>
         {gameOver && <span className='gameOver'>Game Over!</span>}
 
-        <RenderCard card={spades} zeroDealClass={zeroDealClass} />
-        <RenderCard card={hearts} zeroDealClass={zeroDealClass} />
-        <RenderCard card={clubs} zeroDealClass={zeroDealClass} />
-        <RenderCard card={diamonds} zeroDealClass={zeroDealClass} />
+        <RenderCard card={card1} zeroDealClass={zeroDealClass} />
+        <RenderCard card={card2} zeroDealClass={zeroDealClass} />
+        <RenderCard card={card3} zeroDealClass={zeroDealClass} />
+        <RenderCard card={card4} zeroDealClass={zeroDealClass} />
       </div>
 
     </div>

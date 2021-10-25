@@ -37,6 +37,15 @@
   top: 1em;
   right: 1em;
   padding: .25em .5em;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.resetGameOver {
+  color: #fff;
+  font-weight: 600;
+  background-color: rgb(0, 162, 255);
 }
 
 .cards-container {
