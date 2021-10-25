@@ -32,16 +32,16 @@ function App() {
   const initializeDeck = () => {
     // setZeroDeal(false)
     const tempDeck = [];
-    for (let suit = 0;suit < suits.length; suit++) {
-      let tempSuit = suits[suit];
+    for (let i = 0;i < suits.length; i++) {
+      let tempSuit = suits[i];
       tempDeck.push({[tempSuit]: []});
       let tempRanks = [];
-      for (let rank = 0; rank < ranks.length; rank++) {
-        let color = suit % 2 === 0 ? '#F00' : '#000';
-        let card = {Suit: suits[suit], Rank: ranks[rank], color}
+      for (let j = 0; j < ranks.length; j++) {
+        let color = suits[i] === 'D' || suits[i] === 'H' ? '#F00' : '#000';
+        let card = {Suit: suits[i], Rank: ranks[j], color}
         tempRanks.push(card)
         }
-      tempDeck[suit][tempSuit] = tempRanks;
+      tempDeck[i][tempSuit] = tempRanks;
     }
     setDeck([...tempDeck])
     setZeroDeal(true)

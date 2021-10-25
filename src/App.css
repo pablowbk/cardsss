@@ -66,10 +66,10 @@
   transform-origin: bottom;
 }
 
-.card:nth-child(even) {
+/* .card:nth-child(even) {
   border-color: red;
   color: red;
-}
+} */
 
 .card.nodeal {
   border-color: #aaa;
