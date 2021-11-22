@@ -59,20 +59,45 @@
 }
 
 .card {
+  position: relative;
+  height: 200px;
+  display: grid;
+  align-items: stretch;
+  justify-items: stretch;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  flex: 0 0 130px;
+  margin: .5em;
+  transition: transform 200ms ease-in-out;
+  /* transform-origin: bottom; */
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.cardFront, 
+.cardBack {
+  backface-visibility: hidden;
+}
+
+.cardFront {
+  display: grid;
+  justify-items: start;
   font-size: 1.5em;
   font-weight: 600;
   padding: .5em;
-  margin: .5em;
   border: 3px solid #000;
   border-radius: 5px;
-  height: 200px;
-  flex: 0 0 130px;
-  box-shadow: 1px 3px 2px 0 rgba(68, 68, 68, 0.513);
-  display: grid;
-  align-content: space-around;
-  justify-items: start;
-  transition: transform 200ms ease-in-out;
-  transform-origin: bottom;
+}
+
+.cardBack {
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  border: 3px solid #aaa;
+  border-radius: 5px;
+  padding: 0.5em;
+  box-shadow: inset 0 0 0 10px #fff;
+  transform: rotateY(180deg);
 }
 
 /* .card:nth-child(even) {
@@ -80,8 +105,9 @@
   color: red;
 } */
 
-.card.nodeal {
-  border-color: #aaa;
+
+.card.noDeal {
+  transform: rotateY(.5turn);
 }
 
 .cardInner {
@@ -93,8 +119,11 @@
   justify-self: end;
 }
 
-.card:hover {
-  transform: translate(2%, -1%) rotateZ(3deg);
+.card.showFront {
+  transform: rotateY(0turn);
+}
+.card.showBack {
+  transform: rotateY(.5turn);
 }
 
 .gameOver {
@@ -119,3 +148,16 @@
 .suitSvg {
   width: 20px;
 }
+
+.card1 {
+  transition-delay: 0ms;
+}
+.card2 {
+  transition-delay: 75ms;
+}
+.card3 {
+  transition-delay: 150ms;
+}
+.card4 {
+  transition-delay: 225ms;
+} 

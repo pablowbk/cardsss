@@ -23,6 +23,8 @@ function App() {
   // empty array representing Deck
   const [fullDeck, setFullDeck] = useState([]); //should be 52 cards
   const [zeroDeal, setZeroDeal] = useState(true);
+  const [flip, setFlip] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [card1, setCard1] = useState({Suit: '', Rank: '', color: ''})
   const [card2, setCard2] = useState({Suit: '', Rank: '', color: ''})
@@ -40,6 +42,8 @@ function App() {
     }
     setFullDeck([...fullDeck])
     setZeroDeal(true)
+    setFlip(true)
+    setDisabled(false)
     setGameOver(false)   
     setCard1({Suit: '', Rank: ''}) 
     setCard2({Suit: '', Rank: ''})
@@ -58,58 +62,69 @@ function App() {
 
   const deal = (e) => {
     e.preventDefault();
+    setDisabled(true)
     let cardCount = countCards()
-    
+    if (cardCount < 52) {
+      setFlip(true)
+    }
+
     if (cardCount < 4) {
       console.log('GAME OVER')
       !gameOver && setGameOver(true)
       return false;
     }
-
-    for(let round = 1;round <= 4; round++) {
-      let random = getRandomInt(fullDeck.length);
-      if (round === 1) {
-        setCard1(fullDeck.splice(random,1)[0])
-      } else if (round === 2) {
-        setCard2(fullDeck.splice(random,1)[0])
-      } else if (round === 3) {
-        setCard3(fullDeck.splice(random,1)[0])
-      } else {
-        setCard4(fullDeck.splice(random,1)[0])
+    
+    setTimeout(function() {
+      for(let round = 1;round <= 4; round++) {
+        let random = getRandomInt(fullDeck.length);
+        if (round === 1) {
+          setCard1(fullDeck.splice(random,1)[0])
+        } else if (round === 2) {
+          setCard2(fullDeck.splice(random,1)[0])
+        } else if (round === 3) {
+          setCard3(fullDeck.splice(random,1)[0])
+        } else {
+          setCard4(fullDeck.splice(random,1)[0])
+        }
       }
-    }
+      setFlip(false)
+      setDisabled(false)
+    },flip ? 50 : 500)
 
     cardCount = countCards()
-
     console.log(`deck has: ${cardCount} cards left`) 
   }
   
   useEffect(initializeDeck,[])
 
   const zeroDealClass = zeroDeal ? 'nodeal' : '';
-  const disableBtn = {backgroundColor: '#ccc'}
+  const flipClass = flip ? 'showBack' : 'showFront';
+  const styleBtn = {backgroundColor: '#ccc'}
   return (
     <div className="App">
       <header className="App-header">
-        <button className="dealBtn" style={gameOver ? disableBtn : null}
-        onClick={
-          (e) => {
-            deal(e)
-            zeroDeal && setZeroDeal(false)
+        <button className="dealBtn" 
+          style={gameOver ? styleBtn : null}
+          onClick={
+            (e) => {
+              deal(e)
+              zeroDeal && setZeroDeal(false)
+            }
           }
-        }
+          disabled={disabled}
         >Deal Cards</button>
       </header>
       
       {!zeroDeal && <button className={!gameOver ? 'resetBtn' : 'resetBtn resetGameOver'} onClick={initializeDeck}>reset</button>}
 
       <div className='cards-container'>
-        {gameOver && <span className='gameOver'>Game Over!</span>}
 
-        <RenderCard card={card1} zeroDealClass={zeroDealClass} />
-        <RenderCard card={card2} zeroDealClass={zeroDealClass} />
-        <RenderCard card={card3} zeroDealClass={zeroDealClass} />
-        <RenderCard card={card4} zeroDealClass={zeroDealClass} />
+        <RenderCard card={card1} zeroDealClass={zeroDealClass} flip={flipClass} cardClass={'card1'}/>
+        <RenderCard card={card2} zeroDealClass={zeroDealClass} flip={flipClass} cardClass={'card2'}/>
+        <RenderCard card={card3} zeroDealClass={zeroDealClass} flip={flipClass} cardClass={'card3'}/>
+        <RenderCard card={card4} zeroDealClass={zeroDealClass} flip={flipClass} cardClass={'card4'}/>
+        
+        {gameOver && <span className='gameOver'>Game Over!</span>}
       </div>
 
     </div>
