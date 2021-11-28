@@ -11,7 +11,12 @@
   min-height: 100vh;
 }
 
+.App-header {
+  position: relative;
+}
+
 .dealBtn {
+  position: relative;
   padding: .75em 2.5em;
   border-radius: 5px;
   border: none;
@@ -19,7 +24,20 @@
   font-size: 1em;
   font-weight: 600;
   background-color: #00a2ff;
-  transition: all 200ms;
+  transition: background-color 200ms, transform 100ms;
+  z-index: 5;
+  width: 170px;
+}
+
+.dealBtnBack {
+  position: absolute;
+  width: 170px;
+  height: 10px;
+  left: 50%;
+  transform: translate(-50%, -5px);
+  background-color: #aaa;
+  border-radius: 5px;
+  z-index: 4;
 }
 
 .dealBtn:hover,
@@ -29,7 +47,7 @@
 }
 
 .dealBtn:active {
-  transform: scale(.9);
+  transform: translateY(5px);
 }
 
 .resetBtn {
@@ -56,6 +74,7 @@
   align-items: stretch;
   position: relative;
   padding: 0 2em;
+  perspective: 400px;
 }
 
 .card {
@@ -68,9 +87,8 @@
   flex: 0 0 130px;
   margin: .5em;
   transition: transform 200ms ease-in-out;
-  /* transform-origin: bottom; */
-  perspective: 1000px;
   transform-style: preserve-3d;
+  /* transform-origin: bottom; */
 }
 
 .cardFront, 
@@ -128,8 +146,12 @@
 
 .gameOver {
   position: absolute;
-  font-size: 3em;
+  font-size: 2.5em;
   font-weight: 600;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  white-space: nowrap;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -143,6 +165,31 @@
     0 0 0 16px #aaa,
     0 0 0 24px #666,
     0 0 0 32px #222;
+}
+
+.gameOver .startOver {
+  font-size: .65em;
+  color: #00a2ff;
+  cursor: pointer;
+  position: relative;
+}
+
+.startOver::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  top: 100%;
+  left: 0;
+  transform: translateX(-10%);
+  background: #00a2ff;
+  opacity: 0;
+  transition: opacity 200ms, transform 200ms;
+}
+
+.startOver:hover::after {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .suitSvg {

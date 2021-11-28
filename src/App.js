@@ -89,18 +89,31 @@ function App() {
       }
       setFlip(false)
       setDisabled(false)
+      cardCount = countCards()
+      console.log(`deck has: ${cardCount} cards left`) 
     },flip ? 50 : 500)
 
-    cardCount = countCards()
-    console.log(`deck has: ${cardCount} cards left`) 
   }
   
-  useEffect(initializeDeck,[])
+  useEffect(() => {
+    console.log('initializing deck...')
+    initializeDeck()
+  },[])
+
+  function GameOver() {
+    return (
+      <p className='gameOver'>
+        <span>Deck is empty!</span>
+        <span className='startOver' onClick={initializeDeck}>start over?</span>
+      </p>
+    )
+  }
 
   const zeroDealClass = zeroDeal ? 'nodeal' : '';
   const flipClass = flip ? 'showBack' : 'showFront';
   const styleBtn = {backgroundColor: '#ccc'}
   return (
+    gameOver ? <GameOver /> : 
     <div className="App">
       <header className="App-header">
         <button className="dealBtn" 
@@ -113,6 +126,7 @@ function App() {
           }
           disabled={disabled}
         >Deal Cards</button>
+        <div className='dealBtnBack'></div>
       </header>
       
       {!zeroDeal && <button className={!gameOver ? 'resetBtn' : 'resetBtn resetGameOver'} onClick={initializeDeck}>reset</button>}
@@ -124,7 +138,6 @@ function App() {
         <RenderCard card={card3} zeroDealClass={zeroDealClass} flip={flipClass} cardClass={'card3'}/>
         <RenderCard card={card4} zeroDealClass={zeroDealClass} flip={flipClass} cardClass={'card4'}/>
         
-        {gameOver && <span className='gameOver'>Game Over!</span>}
       </div>
 
       <div style={{display:'none'}}>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
